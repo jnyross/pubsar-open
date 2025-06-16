@@ -113,46 +113,36 @@ export default function App() {
               placeholder="Your name"
               value={name}
               onChange={e => setName(e.target.value)}
-      <div className="onboarding">
-        <header className="header">
-          <h1>🍻 Pubsar Open 2025 ⛳️</h1>
-          <p className="tagline">Plan your group golf days!<br/>Enter your name and pick your team to get started.</p>
-        </header>
-        <div className="onboarding-form">
-          <input
-            type="text"
-            placeholder="Your name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            maxLength={20}
-            autoFocus
-          />
-          <div className="team-select">
-            {TEAMS.map(t => (
-              <button
-                key={t.name}
-                className={team === t.name ? 'selected' : ''}
-                onClick={() => setTeam(t.name)}
-                type="button"
-              >
-                <span className="team-emoji">{t.emoji}</span> {t.name}
-              </button>
-            ))}
+              maxLength={20}
+              autoFocus
+            />
+            <div className="team-select">
+              {TEAMS.map(t => (
+                <button
+                  key={t.name}
+                  className={team === t.name ? 'selected' : ''}
+                  onClick={() => setTeam(t.name)}
+                  type="button"
+                >
+                  <span className="team-emoji">{t.emoji}</span> {t.name}
+                </button>
+              ))}
+            </div>
+            <button
+              className="continue-btn augusta-btn"
+              disabled={!name || !team}
+              onClick={() => {}}
+              style={{marginTop: '1.5rem'}}
+            >
+              Enter
+            </button>
           </div>
-          <button
-            className="continue-btn"
-            disabled={!name || !team}
-            onClick={() => {}}
-            style={{marginTop: '1.5rem'}}
-          >
-            Continue
-          </button>
-        </div>
-        <div className="legend">
-          <strong>Legend:</strong>
-          <span><span className="legend-dot yes"></span> Yes</span>
-          <span><span className="legend-dot maybe"></span> Yes, but not ideal</span>
-          <span><span className="legend-dot no"></span> No</span>
+          <div className="legend augusta-legend">
+            <strong>Legend:</strong>
+            <span><span className="legend-dot yes"></span> Yes</span>
+            <span><span className="legend-dot maybe"></span> Yes, but not ideal</span>
+            <span><span className="legend-dot no"></span> No</span>
+          </div>
         </div>
       </div>
     );
