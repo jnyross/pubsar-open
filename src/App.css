@@ -1,8 +1,80 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f7f7f7;
-  color: #222;
+body, .augusta-bg {
+  background: #17481f !important;
+  min-height: 100vh;
+}
+.augusta-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #17481f;
+}
+.augusta-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px #0003;
+  border: 3px solid #ffd700;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  margin: 2.5rem auto;
+}
+.augusta-header h1 {
+  font-family: 'Georgia', serif;
+  color: #17481f;
+  font-size: 2.2rem;
+  margin-bottom: 0.2em;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-shadow: 0 2px 0 #ffd70033;
+}
+.augusta-header h2.augusta-sub {
+  font-family: 'Georgia', serif;
+  color: #ffd700;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.augusta-tagline {
+  color: #17481f;
+  font-size: 1.05rem;
+  margin-bottom: 1.5em;
+  font-style: italic;
+}
+.augusta-laurel {
+  font-size: 2.2rem;
+  margin-bottom: 0.2em;
+  color: #ffd700;
+}
+.augusta-btn {
+  background: linear-gradient(90deg, #ffd700 0%, #e6c200 100%);
+  color: #17481f !important;
+  border: 2px solid #ffd700 !important;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px #ffd70033;
+  transition: background 0.2s, color 0.2s;
+}
+.augusta-btn:disabled {
+  background: #eee !important;
+  color: #aaa !important;
+  border: 2px solid #ccc !important;
+}
+.augusta-legend {
+  margin-top: 2.2rem;
+  color: #17481f;
+}
+.augusta-legend strong {
+  color: #ffd700;
+  font-weight: bold;
+}
+@media (max-width: 700px) {
+  .augusta-card {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
 }
 .App {
   max-width: 950px;

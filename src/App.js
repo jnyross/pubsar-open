@@ -99,6 +99,20 @@ export default function App() {
   // Onboarding step
   if (!name || !team) {
     return (
+      <div className="augusta-bg">
+        <div className="augusta-card">
+          <header className="augusta-header">
+            <div className="augusta-laurel">🏆</div>
+            <h1>Pubsar Open 2025</h1>
+            <h2 className="augusta-sub">Welcome to the Entry Form</h2>
+            <p className="augusta-tagline">An Invitational in the Spirit of Augusta National</p>
+          </header>
+          <div className="onboarding-form">
+            <input
+              type="text"
+              placeholder="Your name"
+              value={name}
+              onChange={e => setName(e.target.value)}
       <div className="onboarding">
         <header className="header">
           <h1>🍻 Pubsar Open 2025 ⛳️</h1>
