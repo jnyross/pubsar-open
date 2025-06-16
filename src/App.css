@@ -5,32 +5,40 @@ body {
   color: #222;
 }
 .App {
-  max-width: 900px;
+  max-width: 950px;
   margin: 0 auto;
   padding: 1.5rem;
 }
-header {
+.header {
   text-align: center;
   margin-bottom: 1.5rem;
 }
 .tagline {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #388e3c;
   margin-top: 0.5rem;
 }
-.entry {
+.onboarding {
+  max-width: 420px;
+  margin: 2.5rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px #0002;
+  padding: 2.5rem 2rem 2rem 2rem;
   text-align: center;
-  margin-bottom: 2rem;
 }
-.entry input {
+.onboarding-form input {
   font-size: 1.1rem;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 0.7rem;
+  margin-bottom: 1.2rem;
   width: 220px;
   border-radius: 6px;
   border: 1px solid #bbb;
 }
-.teamsel button {
+.team-select {
+  margin-bottom: 1.2rem;
+}
+.team-select button {
   font-size: 1.2rem;
   margin: 0 0.5rem;
   padding: 0.5rem 1.2rem;
@@ -40,11 +48,11 @@ header {
   cursor: pointer;
   transition: border 0.2s, background 0.2s;
 }
-.teamsel button.selected {
+.team-select button.selected {
   border: 2px solid #388e3c;
   background: #e8f5e9;
 }
-.entry button {
+.continue-btn {
   margin-top: 1rem;
   font-size: 1.1rem;
   padding: 0.5rem 2rem;
@@ -55,29 +63,106 @@ header {
   cursor: pointer;
   transition: background 0.2s;
 }
-.entry button:disabled {
+.continue-btn:disabled {
   background: #bbb;
   cursor: not-allowed;
 }
-.calendar-section {
-  margin-top: 1.5rem;
+.user-summary {
+  margin: 0.5rem 0 1rem 0;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+}
+.edit-user {
+  font-size: 0.95rem;
+  background: #eee;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  padding: 0.2rem 0.8rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+.instructions {
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 7px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem auto 1.2rem auto;
+  max-width: 500px;
+  font-size: 1.05rem;
+}
+.best-days-summary {
+  background: #fffde7;
+  border: 2px solid #ffd600;
+  border-radius: 10px;
+  margin: 1.2rem auto 1.5rem auto;
+  max-width: 500px;
+  padding: 1rem 1.2rem;
+  text-align: left;
+}
+.best-days-summary h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #bfa100;
+}
+.legend {
+  margin: 1.2rem auto 1.2rem auto;
+  text-align: center;
+  font-size: 1.1rem;
+}
+.legend-dot {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  margin-right: 0.3em;
+  vertical-align: middle;
+}
+.legend-dot.yes { background: #43a047; }
+.legend-dot.maybe { background: #fbc02d; }
+.legend-dot.no { background: #e53935; }
+.toast {
+  background: #43a047;
+  color: #fff;
+  padding: 0.7em 1.2em;
+  border-radius: 7px;
+  position: fixed;
+  top: 1.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px #0002;
+  animation: fadein 0.3s, fadeout 0.3s 1.7s;
+}
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeout {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.5rem;
 }
 .cal-cell {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 8px #0001;
-  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+  padding: 1rem 0.7rem 0.7rem 0.7rem;
   text-align: center;
   position: relative;
-  min-height: 120px;
+  min-height: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: box-shadow 0.2s;
 }
 .cal-cell.best {
   border: 2px solid #ffd600;
@@ -85,27 +170,31 @@ header {
 }
 .cal-date {
   font-weight: bold;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.08rem;
 }
 .status-btns {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 .status-btns button {
-  font-size: 1.3rem;
-  margin: 0 0.1rem;
-  padding: 0.2rem 0.5rem;
-  border: 1.5px solid #bbb;
-  border-radius: 5px;
+  font-size: 1.2rem;
+  margin: 0 0.15rem;
+  padding: 0.3rem 0.7rem;
+  border: 2px solid #bbb;
+  border-radius: 6px;
   background: #f7f7f7;
   cursor: pointer;
-  transition: border 0.2s, background 0.2s;
+  transition: border 0.2s, background 0.2s, color 0.2s;
 }
 .status-btns button.selected {
-  border: 2px solid #388e3c;
-  background: #e8f5e9;
+  color: #fff;
+  font-weight: bold;
 }
+.status-btns button[style*='#43a047'] { background: #43a047 !important; border-color: #43a047 !important; }
+.status-btns button[style*='#fbc02d'] { background: #fbc02d !important; border-color: #fbc02d !important; }
+.status-btns button[style*='#e53935'] { background: #e53935 !important; border-color: #e53935 !important; }
 .group-list {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   margin-top: 0.2rem;
   min-height: 1.2em;
 }
@@ -115,21 +204,17 @@ header {
   padding: 0.1em 0.3em;
   border-radius: 4px;
   background: #e3f2fd;
-  font-size: 0.95em;
+  font-size: 0.98em;
+}
+.no-entries {
+  color: #bbb;
+  font-size: 0.97em;
 }
 .best-flag {
   position: absolute;
   top: 0.3em;
   right: 0.5em;
   font-size: 1.2em;
-}
-.legend {
-  margin-top: 1.2rem;
-  text-align: center;
-  font-size: 1.1rem;
-}
-.legend span {
-  margin: 0 1.2em 0 0;
 }
 .error {
   color: #b71c1c;
@@ -141,7 +226,7 @@ header {
   max-width: 400px;
   text-align: center;
 }
-footer {
+.footer {
   margin-top: 2.5rem;
   text-align: center;
   color: #888;
@@ -151,7 +236,10 @@ footer {
   .calendar-grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
-  .App {
+  .App, .onboarding {
     padding: 0.5rem;
+  }
+  .best-days-summary {
+    padding: 0.7rem 0.5rem;
   }
 }
