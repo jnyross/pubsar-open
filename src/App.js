@@ -77,17 +77,24 @@ export default function App() {
     groupByDate[entry.Date].push(entry);
   }
 
-  // Calculate best golf days (most Yes, least No)
-  const bestGolfDays = Object.entries(groupByDate)
-    .map(([date, entries]) => ({
-      date,
-      yes: entries.filter(e => e.Status === 'Yes').length,
-      maybe: entries.filter(e => e.Status === 'Yes, but not ideal').length,
-      no: entries.filter(e => e.Status === 'No').length,
-      people: entries,
-    }))
-    .sort((a, b) => b.yes - a.yes || b.maybe - a.maybe);
-  const bestDates = new Set(bestGolfDays.slice(0, 5).map(d => d.date));
+  // Calculate potential golf dates
+  const allPeople = Array.from(new Set(availability.map(e => e.Name)));
+  const potentialDatesYes = dates.filter(date => {
+    const dateStr = formatDate(date);
+    const entries = groupByDate[dateStr] || [];
+    if (entries.length === 0) return false;
+    // Only show if everyone is 'Yes'
+    return allPeople.length > 0 && entries.length === allPeople.length && entries.every(e => e.Status === 'Yes');
+  });
+  const potentialDatesYesOrIdeal = dates.filter(date => {
+    const dateStr = formatDate(date);
+    const entries = groupByDate[dateStr] || [];
+    if (entries.length === 0) return false;
+    // Only show if everyone is 'Yes' or 'Yes, but not ideal' (no 'No')
+    return allPeople.length > 0 && entries.length === allPeople.length && entries.every(e => e.Status === 'Yes' || e.Status === 'Yes, but not ideal');
+  });
+  const showYesOnly = potentialDatesYes.length > 0;
+  const potentialDates = showYesOnly ? potentialDatesYes : potentialDatesYesOrIdeal;
 
   // Onboarding step
   if (!name || !team) {
@@ -151,13 +158,21 @@ export default function App() {
       </header>
       {showToast && <div className="toast">Availability saved!</div>}
       {error && <div className="error">{error}</div>}
-      <div className="best-days-summary">
-        <h2>🌟 Best Golf Days</h2>
-        <ul>
-          {bestGolfDays.slice(0, 5).map(d => (
-            <li key={d.date}><b>{d.date}</b>: {d.yes} Yes, {d.maybe} Yes, but not ideal, {d.no} No</li>
-          ))}
-        </ul>
+      <div className="potential-dates-summary">
+        <h2>📅 Potential Dates</h2>
+        {potentialDates.length === 0 ? (
+          <div>No potential dates found.</div>
+        ) : (
+          <ul>
+            {potentialDates.map(date => {
+              const dateStr = formatDate(date);
+              const entries = groupByDate[dateStr] || [];
+              return (
+                <li key={dateStr}><b>{getDayLabel(date)}</b>: {entries.map(e => `${e.Name} (${e.Status})`).join(', ')}</li>
+              );
+            })}
+          </ul>
+        )}
       </div>
       <div className="legend">
         <strong>Legend:</strong>
@@ -169,9 +184,8 @@ export default function App() {
         {dates.map(date => {
           const dateStr = formatDate(date);
           const entries = groupByDate[dateStr] || [];
-          const isBest = bestDates.has(dateStr);
           return (
-            <div key={dateStr} className={`cal-cell${isBest ? ' best' : ''}`}>
+            <div key={dateStr} className={`cal-cell`}>
               <div className="cal-date">{getDayLabel(date)}</div>
               <div className="status-btns">
                 {STATUSES.map(s => (
@@ -195,7 +209,6 @@ export default function App() {
                   </div>
                 ) : <span className="no-entries">No responses yet</span>}
               </div>
-              {isBest && <div className="best-flag">🌟</div>}
             </div>
           );
         })}
