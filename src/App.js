@@ -94,7 +94,7 @@ export default function App() {
     return (
       <div className="onboarding">
         <header className="header">
-          <h1>🍻 Pubsar Open 2024 ⛳️</h1>
+          <h1>🍻 Pubsar Open 2025 ⛳️</h1>
           <p className="tagline">Plan your group golf days!<br/>Enter your name and pick your team to get started.</p>
         </header>
         <div className="onboarding-form">
@@ -140,7 +140,7 @@ export default function App() {
   return (
     <div className="App">
       <header className="header">
-        <h1>🍻 Pubsar Open 2024 ⛳️</h1>
+        <h1>🍻 Pubsar Open 2025 ⛳️</h1>
         <div className="user-summary">
           <span><b>{name}</b> ({team})</span>
           <button className="edit-user" onClick={() => { setName(''); setTeam(''); }}>Change</button>
