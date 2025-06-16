@@ -8,7 +8,7 @@ const TEAMS = [
 ];
 const STATUSES = [
   { label: '✅ Yes', value: 'Yes', color: '#43a047' },
-  { label: '❓ Maybe', value: 'Maybe', color: '#fbc02d' },
+  { label: '🟦 Yes, but not ideal', value: 'Yes, but not ideal', color: '#fbc02d' },
   { label: '❌ No', value: 'No', color: '#e53935' },
 ];
 
@@ -82,7 +82,7 @@ export default function App() {
     .map(([date, entries]) => ({
       date,
       yes: entries.filter(e => e.Status === 'Yes').length,
-      maybe: entries.filter(e => e.Status === 'Maybe').length,
+      maybe: entries.filter(e => e.Status === 'Yes, but not ideal').length,
       no: entries.filter(e => e.Status === 'No').length,
       people: entries,
     }))
@@ -130,7 +130,7 @@ export default function App() {
         <div className="legend">
           <strong>Legend:</strong>
           <span><span className="legend-dot yes"></span> Yes</span>
-          <span><span className="legend-dot maybe"></span> Maybe</span>
+          <span><span className="legend-dot maybe"></span> Yes, but not ideal</span>
           <span><span className="legend-dot no"></span> No</span>
         </div>
       </div>
@@ -155,14 +155,14 @@ export default function App() {
         <h2>🌟 Best Golf Days</h2>
         <ul>
           {bestGolfDays.slice(0, 5).map(d => (
-            <li key={d.date}><b>{d.date}</b>: {d.yes} Yes, {d.maybe} Maybe, {d.no} No</li>
+            <li key={d.date}><b>{d.date}</b>: {d.yes} Yes, {d.maybe} Yes, but not ideal, {d.no} No</li>
           ))}
         </ul>
       </div>
       <div className="legend">
         <strong>Legend:</strong>
         <span><span className="legend-dot yes"></span> Yes</span>
-        <span><span className="legend-dot maybe"></span> Maybe</span>
+        <span><span className="legend-dot maybe"></span> Yes, but not ideal</span>
         <span><span className="legend-dot no"></span> No</span>
       </div>
       <div className="calendar-grid">
@@ -190,7 +190,7 @@ export default function App() {
                 {entries.length > 0 ? (
                   <div className="group-names">
                     {entries.map((e, i) => (
-                      <span key={i} className={`person ${e.Team}`}>{e.Name} <span className="team-emoji">{TEAMS.find(t => t.name === e.Team)?.emoji}</span> <span className="status">{e.Status === 'Yes' ? '✅' : e.Status === 'Maybe' ? '❓' : '❌'}</span></span>
+                      <span key={i} className={`person ${e.Team}`}>{e.Name} <span className="team-emoji">{TEAMS.find(t => t.name === e.Team)?.emoji}</span> <span className="status">{e.Status === 'Yes' ? '✅' : e.Status === 'Yes, but not ideal' ? '🟦' : '❌'}</span></span>
                     ))}
                   </div>
                 ) : <span className="no-entries">No responses yet</span>}
